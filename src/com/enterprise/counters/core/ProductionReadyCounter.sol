@@ -16,14 +16,14 @@ contract ProductionReadyCounter is EnterpriseCounter, Ownable {
 
     uint256 private value;
 
-    function init(Injector injector) public override {
-        securityManager = SecurityManager(injector.get("SecurityManager"));
-        logger = Logger(injector.get("Logger"));
-        telemetry = PhoneHome(injector.get("Telemetry"));
+    function init(Injector injector) internal override {
+        securityManager = SecurityManager(injector.getSingleton("SecurityManager"));
+        logger = Logger(injector.getSingleton("Logger"));
+        telemetry = PhoneHome(injector.getSingleton("Telemetry"));
     }
 
     function increment() public override {
-        require(securityManager.checkRole(securityManager.INCREMENTER_ROLE(), msg.sender));
+        securityManager.checkRole(securityManager.INCREMENTER_ROLE(), msg.sender);
 
         logger.debug("About to increment counter");
 

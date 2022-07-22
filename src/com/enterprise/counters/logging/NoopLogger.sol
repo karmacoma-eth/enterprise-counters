@@ -8,7 +8,7 @@ import { Logger } from "src/com/enterprise/counters/logging/Logger.sol";
 /// @title NoopLogger
 /// @author Enterprise Development Group
 contract NoopLogger is Injectable, Logger {
-    function init(Injector injector) public override {}
+    function init(Injector injector) internal override {}
 
     function debug(string memory message) public override {}
     function info(string memory message) public override {}

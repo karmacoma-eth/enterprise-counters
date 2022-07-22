@@ -5,8 +5,6 @@ import { Injectable } from "src/com/enterprise/counters/dependency-injection/Inj
 import { Injector } from "src/com/enterprise/counters/dependency-injection/Injector.sol";
 import { EnterpriseCounter } from "src/com/enterprise/counters/core/EnterpriseCounter.sol";
 
-import "@openzeppelin/contracts/access/AccessControl.sol";
-
 abstract contract SecurityManager is Injectable {
     bytes32 public constant INCREMENTER_ROLE = keccak256("INCREMENTER_ROLE");
     bytes32 public constant DECREMENTER_ROLE = keccak256("DECREMENTER_ROLE");

@@ -5,7 +5,7 @@ import { Injector } from "src/com/enterprise/counters/dependency-injection/Injec
 import { EnterpriseCounter } from "src/com/enterprise/counters/core/EnterpriseCounter.sol";
 
 contract NoopCounter is EnterpriseCounter {
-    function init(Injector injector) public override {}
+    function init(Injector injector) internal override {}
 
     function increment() public override {}
 

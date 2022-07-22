@@ -11,11 +11,9 @@ contract LogForwarder is Injectable, Logger {
     Injector internal injector;
     Logger[] internal loggers;
 
-    function init(Injector _injector) public override {}
+    function init(Injector _injector) internal override {}
 
     function add(Logger logger) public {
-        logger.init(injector);
-
         loggers.push(logger);
     }
 

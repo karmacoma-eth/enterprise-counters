@@ -13,7 +13,7 @@ contract EventLogger is Injectable, Logger {
     event WARN(string message);
     event ERROR(string message);
 
-    function init(Injector injector) public override {}
+    function init(Injector injector) internal override {}
 
     function debug(string memory message) public override {
         emit DEBUG(message);

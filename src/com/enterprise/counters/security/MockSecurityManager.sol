@@ -5,7 +5,7 @@ import { Injector } from "src/com/enterprise/counters/dependency-injection/Injec
 import { SecurityManager } from "src/com/enterprise/counters/security/SecurityManager.sol";
 
 contract MockSecurityManager is SecurityManager {
-    function init(Injector injector) public override {}
+    function init(Injector injector) internal override {}
 
     function checkRole(bytes32, address) public pure override returns (bool) {
         return true;

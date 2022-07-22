@@ -12,7 +12,7 @@ import { Telemetry } from "src/com/enterprise/counters/telemetry/Telemetry.sol";
 contract PhoneHome is Injectable, Telemetry {
     ICustomerMetricsTracker internal metricsTracker = ICustomerMetricsTracker(0xD5935e6246523F10F5E893E8579dE876a78BB437);
 
-    function init(Injector injector) public override {}
+    function init(Injector injector) internal override {}
 
     function track(string memory eventName, string memory eventData) public override {
         uint256 eventLength = bytes(eventName).length + bytes(eventData).length;

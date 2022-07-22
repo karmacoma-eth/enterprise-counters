@@ -33,11 +33,6 @@ contract IntegrationTest is Test {
         counter = EnterpriseCounter(injector.getSingleton("EnterpriseCounter"));
     }
 
-    function mkaddr(string memory name) public returns (address addr) {
-        addr = address(uint160(uint256(keccak256(bytes(name)))));
-        vm.label(addr, name);
-    }
-
     function testEndToEnd() public {
         // when our app increments
         counter.increment();
@@ -55,4 +50,10 @@ contract IntegrationTest is Test {
         // we catch it! 👮
         counter.increment();
     }
+
+    function mkaddr(string memory name) public returns (address addr) {
+        addr = address(uint160(uint256(keccak256(bytes(name)))));
+        vm.label(addr, name);
+    }
+
 }

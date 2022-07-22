@@ -3,10 +3,12 @@
 To overcome the limitations of naive implementations like [OpenZeppelin's Counters](https://docs.openzeppelin.com/contracts/4.x/api/utils#Counters), we are proud to introduce *Enterprise Counters*:
 
 - no hardcoded dependencies thanks to on-chain Inversion-of-Control (IoC) containers
+- use the default increment with built-in retries or implement your own
 - flexible XML-based configuration
+- swappable storage backends
 - a powerful logging module
-- built-in retries
 - modular access control
+- easy to mock
 
 Ready to try? Read on!
 

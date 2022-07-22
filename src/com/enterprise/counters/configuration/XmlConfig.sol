@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: ORACLE-APPROVED
 pragma solidity ^0.8.13;
 
+import { ConcreteSafeIncrementerFactory } from "src/com/enterprise/counters/core/service/ConcreteSafeIncrementerFactory.sol";
 import { ConfigFacade } from "src/com/enterprise/counters/configuration/ConfigFacade.sol";
 import { ConfigListener } from "src/com/enterprise/counters/configuration/ConfigListener.sol";
 import { EventLogger } from "src/com/enterprise/counters/logging/EventLogger.sol";
@@ -14,6 +15,7 @@ import { NoopLogger } from "src/com/enterprise/counters/logging/NoopLogger.sol";
 import { PhoneHome } from "src/com/enterprise/counters/telemetry/PhoneHome.sol";
 import { ProductionReadyCounter } from "src/com/enterprise/counters/core/ProductionReadyCounter.sol";
 import { StrictSecurityManager } from "src/com/enterprise/counters/security/StrictSecurityManager.sol";
+import { Uint256BackedNumericFactory } from "src/com/enterprise/counters/core/service/Uint256BackedNumericFactory.sol";
 import { XmlParser } from "src/com/enterprise/counters/xml/XmlParser.sol";
 
 /// @title XmlConfig
@@ -59,6 +61,10 @@ contract XmlConfig is ConfigFacade, ConfigListener {
             return address(new ProductionReadyCounter());
         } else if (beanHash == keccak256("NoopCounter")) {
             return address(new NoopCounter());
+        } else if (beanHash == keccak256("Uint256BackedNumericFactory")) {
+            return address(new Uint256BackedNumericFactory());
+        } else if (beanHash == keccak256("ConcreteSafeIncrementerFactory")) {
+            return address(new ConcreteSafeIncrementerFactory());
         } else {
             revert UnknownBeanClass(beanClass);
         }

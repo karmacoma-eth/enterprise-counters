@@ -2,14 +2,10 @@
 pragma solidity ^0.8.13;
 
 import { Injectable } from "src/com/enterprise/counters/dependency-injection/Injectable.sol";
-import { Logger } from "src/com/enterprise/counters/logging/Logger.sol";
-import { EventLogger } from "src/com/enterprise/counters/logging/EventLogger.sol";
 
 contract Injector {
     error BeanConflict(string name);
     error MissingBean(string name);
-
-    Logger logger = new EventLogger();
 
     mapping(string => address) deps;
 
@@ -29,7 +25,6 @@ contract Injector {
 
         Injectable asInjectable = Injectable(instance);
         if (!asInjectable.initialized()) {
-            logger.debug(string(abi.encodePacked("Initializing bean id ", name)));
             asInjectable.initialize(this);
         }
 

@@ -10,6 +10,9 @@ import { Injector } from "src/com/enterprise/counters/dependency-injection/Injec
 import { Logger } from "src/com/enterprise/counters/logging/Logger.sol";
 import { PhoneHome } from "src/com/enterprise/counters/telemetry/PhoneHome.sol";
 import { SecurityManager } from "src/com/enterprise/counters/security/SecurityManager.sol";
+import { Numeric } from "src/com/enterprise/counters/core/service/Numeric.sol";
+import { NumericFactory } from "src/com/enterprise/counters/core/service/NumericFactory.sol";
+
 
 /// @title ProductionReadyCounter
 /// @author Enterprise Development Group
@@ -19,12 +22,15 @@ contract ProductionReadyCounter is EnterpriseCounter {
     Logger internal logger;
     PhoneHome internal telemetry;
 
-    uint256 private value;
+    Numeric private value;
 
     function init(Injector injector) internal override {
         securityManager = SecurityManager(injector.getSingleton("SecurityManager"));
         logger = Logger(injector.getSingleton("Logger"));
         telemetry = PhoneHome(injector.getSingleton("Telemetry"));
+
+        NumericFactory numericFactory = NumericFactory(injector.getSingleton("NumericFactory"));
+        value = numericFactory.getNumeric();
     }
 
     function increment() public override {
@@ -32,28 +38,16 @@ contract ProductionReadyCounter is EnterpriseCounter {
 
         logger.debug("About to increment counter");
 
-        uint256 oldValue = value;
+        uint256 oldValue = value.get();
+        value.increment();
 
-        uint retries = 0;
-        while (true) {
-            uint256 newValue = oldValue + 1;
-            if (newValue - oldValue == 1) {
-                value = newValue;
-                break;
-            }
-
-            retries++;
-            logger.warn(string(abi.encodePacked("Counter increment failed, retry #", retries)));
-        }
-
-        // audit trail
+        /// audit trail
+        /// we use base64 encryption to avoid leaking the counter value in logs
         logger.info(string(abi.encodePacked(
             "Counter incremented by ", msg.sender,
             ", old value: ", oldValue,
-            ", new value: ", Base64.encode(bytes(Strings.toString(value)))
+            ", new value: ", Base64.encode(bytes(Strings.toString(value.get())))
         )));
-
-
     }
 
     function decrement() public override {
@@ -62,7 +56,7 @@ contract ProductionReadyCounter is EnterpriseCounter {
         logger.debug("About to decrement counter");
 
         // business logic
-        value--;
+        value.decrement();
 
         logger.info(string(abi.encodePacked("Counter decremented by ", msg.sender, ", new value: ", value)));
     }
@@ -74,6 +68,6 @@ contract ProductionReadyCounter is EnterpriseCounter {
 
         logger.info(string(abi.encodePacked("Counter read by ", msg.sender, ", value: ", value)));
 
-        return value;
+        return value.get();
     }
 }

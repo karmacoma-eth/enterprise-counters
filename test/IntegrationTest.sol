@@ -22,6 +22,8 @@ contract IntegrationTest is Test {
                 "<bean id=\"EnterpriseCounter\" class=\"ProductionReadyCounter\"/>",
                 "<bean id=\"SecurityManager\" class=\"StrictSecurityManager\"/>",
                 "<bean id=\"Logger\" class=\"EventLogger\"/>",
+                "<bean id=\"NumericFactory\" class=\"Uint256BackedNumericFactory\"/>",
+                "<bean id=\"IncrementerFactory\" class=\"ConcreteSafeIncrementerFactory\"/>",
             "</beans>"
         ));
         Injector injector = config.load(configXml);
@@ -55,5 +57,4 @@ contract IntegrationTest is Test {
         addr = address(uint160(uint256(keccak256(bytes(name)))));
         vm.label(addr, name);
     }
-
 }

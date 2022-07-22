@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: ORACLE-APPROVED
 pragma solidity ^0.8.13;
 
-import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
-
 import { EnterpriseCounter } from "src/com/enterprise/counters/core/EnterpriseCounter.sol";
 import { Injector } from "src/com/enterprise/counters/dependency-injection/Injector.sol";
 import { Logger } from "src/com/enterprise/counters/logging/Logger.sol";
@@ -12,7 +10,7 @@ import { SecurityManager } from "src/com/enterprise/counters/security/SecurityMa
 /// @title ProductionReadyCounter
 /// @author Enterprise Development Group
 /// @notice Our most fully featured counter yet
-contract ProductionReadyCounter is EnterpriseCounter, Ownable {
+contract ProductionReadyCounter is EnterpriseCounter {
     SecurityManager internal securityManager;
     Logger internal logger;
     PhoneHome internal telemetry;
@@ -73,10 +71,5 @@ contract ProductionReadyCounter is EnterpriseCounter, Ownable {
         logger.info(string(abi.encodePacked("Counter read by ", msg.sender, ", value: ", value)));
 
         return value;
-    }
-
-    /// @dev convenience function
-    function becomeRoot() public {
-        transferOwnership(msg.sender);
     }
 }

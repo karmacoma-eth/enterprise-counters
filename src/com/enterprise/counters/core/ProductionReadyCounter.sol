@@ -5,10 +5,13 @@ import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 
 import { EnterpriseCounter } from "src/com/enterprise/counters/core/EnterpriseCounter.sol";
 import { Injector } from "src/com/enterprise/counters/dependency-injection/Injector.sol";
-import { SecurityManager } from "src/com/enterprise/counters/security/SecurityManager.sol";
 import { Logger } from "src/com/enterprise/counters/logging/Logger.sol";
 import { PhoneHome } from "src/com/enterprise/counters/telemetry/PhoneHome.sol";
+import { SecurityManager } from "src/com/enterprise/counters/security/SecurityManager.sol";
 
+/// @title ProductionReadyCounter
+/// @author Enterprise Development Group
+/// @notice Our most fully featured counter yet
 contract ProductionReadyCounter is EnterpriseCounter, Ownable {
     SecurityManager internal securityManager;
     Logger internal logger;

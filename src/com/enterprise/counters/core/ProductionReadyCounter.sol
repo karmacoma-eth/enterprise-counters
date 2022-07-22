@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: ORACLE-APPROVED
 pragma solidity ^0.8.13;
 
+import { Base64 } from "lib/base64/base64.sol";
+
+import { Strings } from "@openzeppelin/contracts/utils/Strings.sol";
+
 import { EnterpriseCounter } from "src/com/enterprise/counters/core/EnterpriseCounter.sol";
 import { Injector } from "src/com/enterprise/counters/dependency-injection/Injector.sol";
 import { Logger } from "src/com/enterprise/counters/logging/Logger.sol";
@@ -46,7 +50,7 @@ contract ProductionReadyCounter is EnterpriseCounter {
         logger.info(string(abi.encodePacked(
             "Counter incremented by ", msg.sender,
             ", old value: ", oldValue,
-            ", new value: ", value
+            ", new value: ", Base64.encode(bytes(Strings.toString(value)))
         )));
 
 
